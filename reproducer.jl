@@ -6,18 +6,13 @@ const Pm = let
 	params = camb.set_params(H0=70)
 	params.set_matter_power(redshifts=0:.1:1.5, kmax=9.5)
 	res = camb.get_results(params)
-	power = res.get_matter_power_interpolator(nonlinear=false, k_hunit=false, hubble_units=false, extrap_kmax=1e6).P
-	(z, k) -> let
-		pyval = power(z, k)
-		pyconvert(Float64, pyval)
-	end
+	res.get_matter_power_interpolator(nonlinear=false, k_hunit=false, hubble_units=false, extrap_kmax=1e6)
 end
 
 calculate_stuff = (R, z) -> let
-	θ = R/900.
 	integrand = lθ -> let
 		kl = lθ/((1+z) * R)
-		sqrt(lθ)*cos(lθ)*Pm(z, kl) / (θ*θ)
+		pyconvert(Float64, Pm.P(z, kl))
 	end
 	sum(integrand.(50 .* rand(1000)))
 end

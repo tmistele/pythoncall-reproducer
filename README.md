@@ -5,8 +5,8 @@ Running `julia --project=. reproducer.jl` non-deterministically produces a segfa
 Example stacktrace:
 
 ```
-[219060] signal 11 (1): Segmentation fault
-in expression starting at $REPO/reproducer.jl:28
+[502970] signal 11 (1): Segmentation fault
+in expression starting at $REPO/reproducer.jl:27
 lookup_tp_mro at /usr/local/src/conda/python-3.12.5/Objects/typeobject.c:336 [inlined]
 PyType_IsSubtype at /usr/local/src/conda/python-3.12.5/Objects/typeobject.c:2127 [inlined]
 PyObject_TypeCheck at /usr/local/src/conda/python-3.12.5/Include/object.h:381 [inlined]
@@ -24,17 +24,18 @@ pycallargs at $HOME/.julia/packages/PythonCall/Nr75f/src/Core/builtins.jl:220
 pycall at $HOME/.julia/packages/PythonCall/Nr75f/src/Core/builtins.jl:233 [inlined]
 #_#11 at $HOME/.julia/packages/PythonCall/Nr75f/src/Core/Py.jl:357 [inlined]
 Py at $HOME/.julia/packages/PythonCall/Nr75f/src/Core/Py.jl:357 [inlined]
-#1 at $REPO/reproducer.jl:12 [inlined]
-#4 at $REPO/reproducer.jl:21
-evalrule at $HOME/.julia/packages/QuadGK/BjmU0/src/evalrule.jl:32
-refine at $HOME/.julia/packages/QuadGK/BjmU0/src/adapt.jl:114
-adapt at $HOME/.julia/packages/QuadGK/BjmU0/src/adapt.jl:96 [inlined]
-do_quadgk at $HOME/.julia/packages/QuadGK/BjmU0/src/adapt.jl:87
-#50 at $HOME/.julia/packages/QuadGK/BjmU0/src/api.jl:83 [inlined]
-handle_infinities at $HOME/.julia/packages/QuadGK/BjmU0/src/adapt.jl:189 [inlined]
-#quadgk#49 at $HOME/.julia/packages/QuadGK/BjmU0/src/api.jl:82 [inlined]
-quadgk at $HOME/.julia/packages/QuadGK/BjmU0/src/api.jl:80 [inlined]
-#3 at $REPO/reproducer.jl:23 [inlined]
+#1 at $REPO/reproducer.jl:11 [inlined]
+#4 at $REPO/reproducer.jl:20
+_broadcast_getindex_evalf at ./broadcast.jl:673 [inlined]
+_broadcast_getindex at ./broadcast.jl:646 [inlined]
+getindex at ./broadcast.jl:605 [inlined]
+macro expansion at ./broadcast.jl:968 [inlined]
+macro expansion at ./simdloop.jl:77 [inlined]
+copyto! at ./broadcast.jl:967 [inlined]
+copyto! at ./broadcast.jl:920 [inlined]
+copy at ./broadcast.jl:892 [inlined]
+materialize at ./broadcast.jl:867 [inlined]
+#3 at $REPO/reproducer.jl:22
 _broadcast_getindex_evalf at ./broadcast.jl:673 [inlined]
 _broadcast_getindex at ./broadcast.jl:646 [inlined]
 getindex at ./broadcast.jl:605 [inlined]
@@ -44,7 +45,7 @@ copyto! at ./broadcast.jl:967 [inlined]
 copyto! at ./broadcast.jl:920 [inlined]
 copy at ./broadcast.jl:892 [inlined]
 materialize at ./broadcast.jl:867
-unknown function (ip: 0x7f438a6e1ce2)
+unknown function (ip: 0x7f806f73b092)
 jl_apply at /cache/build/builder-demeter6-6/julialang/julia-master/src/julia.h:2157 [inlined]
 do_call at /cache/build/builder-demeter6-6/julialang/julia-master/src/interpreter.c:126
 eval_value at /cache/build/builder-demeter6-6/julialang/julia-master/src/interpreter.c:223
@@ -66,8 +67,8 @@ jl_apply at /cache/build/builder-demeter6-6/julialang/julia-master/src/julia.h:2
 true_main at /cache/build/builder-demeter6-6/julialang/julia-master/src/jlapi.c:900
 jl_repl_entrypoint at /cache/build/builder-demeter6-6/julialang/julia-master/src/jlapi.c:1059
 main at julia (unknown line)
-unknown function (ip: 0x7f438bb6d42d)
+unknown function (ip: 0x7f8077d5242d)
 __libc_start_main at /usr/lib64/libc.so.6 (unknown line)
 unknown function (ip: 0x4010b8)
-Allocations: 11794097 (Pool: 11793774; Big: 323); GC: 9
+Allocations: 7506157 (Pool: 7505890; Big: 267); GC: 7
 ```
